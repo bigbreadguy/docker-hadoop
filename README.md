@@ -91,8 +91,8 @@ docker-compose up -d
 ```
 The output should look like:
 ```
-docker-3 % docker-compose up -d    
-Creating network "docker-3_default" with the default driver
+docker-hadoop % docker-compose up -d    
+Creating network "docker-hadoop_default" with the default driver
 Creating docker-hadoop_namenode_1        ... done
 Creating docker-hadoop_datanode_1        ... done
 Creating docker-hadoop_nodemanager_1     ... done
