@@ -12,36 +12,36 @@ A Hadoop cluster can be created by pulling in the relevant docker image and spec
 ```
 version: "2"
 services:
-   namenode:
-      image: apache/hadoop:3
-      hostname: namenode
-      command: ["hdfs", "namenode"]
-      ports:
-        - 9870:9870
-      env_file:
-        - ./config
-      environment:
-          ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
-   datanode:
-      image: apache/hadoop:3
-      command: ["hdfs", "datanode"]
-      env_file:
-        - ./config      
-   resourcemanager:
-      image: apache/hadoop:3
-      hostname: resourcemanager
-      command: ["yarn", "resourcemanager"]
-      ports:
-         - 8088:8088
-      env_file:
-        - ./config
-      volumes:
-        - ./test.sh:/opt/test.sh
-   nodemanager:
-      image: apache/hadoop:3
-      command: ["yarn", "nodemanager"]
-      env_file:
-        - ./config
+  namenode:
+    image: apache/hadoop:3
+    hostname: namenode
+    command: ["hdfs", "namenode"]
+    ports:
+      - 9870:9870
+    env_file:
+      - ./config
+    environment:
+      ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+  datanode:
+    image: apache/hadoop:3
+    command: ["hdfs", "datanode"]
+    env_file:
+      - ./config      
+  resourcemanager:
+    image: apache/hadoop:3
+    hostname: resourcemanager
+    command: ["yarn", "resourcemanager"]
+    ports:
+      - 8088:8088
+    env_file:
+      - ./config
+    volumes:
+      - ./test.sh:/opt/test.sh
+  nodemanager:
+    image: apache/hadoop:3
+    command: ["yarn", "nodemanager"]
+    env_file:
+      - ./config
 ```
 Change the ```image: apache/hadoop:3``` incase you want to build any other image like ```image: apache/hadoop:3.3.5``` for building Apache Hadoop 3.3.5 image
 
