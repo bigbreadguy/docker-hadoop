@@ -4,7 +4,7 @@ services:
       image: apache/hadoop:3
       hostname: namenode
       entrypoint: [
-        "sudo", "adduser", "${HDFS_NAMENODE_USER}",
+        "sudo", "adduser", "-D", "${HDFS_NAMENODE_USER}",
         "&&", "su", "-", "${HDFS_NAMENODE_USER}",
         "&&", "hdfs", "namenode"
       ]
@@ -18,7 +18,7 @@ services:
    datanode:
       image: apache/hadoop:3
       entrypoint: [
-        "sudo", "adduser", "${HDFS_DATANODE_USER}",
+        "sudo", "adduser", "-D", "${HDFS_DATANODE_USER}",
         "&&", "su", "${HDFS_DATANODE_USER}",
         "&&", "hdfs", "datanode"
       ]
@@ -28,7 +28,7 @@ services:
       image: apache/hadoop:3
       hostname: resourcemanager
       entrypoint: [
-        "sudo", "adduser", "${YARN_RESOURCEMANAGER_USER}",
+        "sudo", "adduser", "-D", "${YARN_RESOURCEMANAGER_USER}",
         "&&", "su", "${YARN_RESOURCEMANAGER_USER}",
         "&&", "yarn", "resourcemanager"
       ]
@@ -41,7 +41,7 @@ services:
    nodemanager:
       image: apache/hadoop:3
       entrypoint: [
-        "sudo", "adduser", "${YARN_NODEMANAGER_USER}",
+        "sudo", "adduser", "-D", "${YARN_NODEMANAGER_USER}",
         "&&", "su", "${YARN_NODEMANAGER_USER}",
         "&&", "yarn", "nodemanager"
       ]
