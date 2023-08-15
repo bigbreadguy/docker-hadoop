@@ -1,3 +1,8 @@
+HDFS_NAMENODE_USER=hdfs
+HDFS_DATANODE_USER=hdfs
+HDFS_SECONDARYNAMENODE_USER=hdfs
+YARN_RESOURCEMANAGER_USER=yarn
+YARN_NODEMANAGER_USER=yarn
 CORE-SITE.XML_fs.default.name=hdfs://namenode
 CORE-SITE.XML_fs.defaultFS=hdfs://namenode
 HDFS-SITE.XML_dfs.namenode.rpc-address=namenode:8020
