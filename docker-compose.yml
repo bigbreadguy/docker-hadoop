@@ -3,35 +3,28 @@ services:
    namenode:
       image: apache/hadoop:3
       hostname: namenode
-      entrypoint: [
-        "sudo", "adduser", "-D", "${HDFS_NAMENODE_USER}",
-        "&&", "su", "-", "${HDFS_NAMENODE_USER}",
-        "&&", "hdfs", "namenode"
-      ]
-      command:
-        - chown -R ${HDFS_NAMENODE_USER}:${HDFS_NAMENODE_USER} ${ENSURE_NAMENODE_DIR}
-        - ${HADOOP_HOME}/sbin/start-dfs.sh
+      entrypoint: ["sh", "-c"]
+      command: 
+        - "adduser -D ${HDFS_DATANODE_USER} &&
+          chown -R ${HDFS_NAMENODE_USER}:${HDFS_NAMENODE_USER} ${ENSURE_NAMENODE_DIR} &&
+          su - ${HDFS_DATANODE_USER} -c 'hdfs datanode' &&
+          ${HADOOP_HOME}/sbin/start-dfs.sh"
       ports:
         - 9870:9870
       env_file:
         - ./config
    datanode:
       image: apache/hadoop:3
-      entrypoint: [
-        "sudo", "adduser", "-D", "${HDFS_DATANODE_USER}",
-        "&&", "su", "${HDFS_DATANODE_USER}",
-        "&&", "hdfs", "datanode"
-      ]
+      entrypoint: ["sh", "-c"]
+      command: "adduser -D ${HDFS_DATANODE_USER} && su - ${HDFS_DATANODE_USER} -c 'hdfs datanode'"
       env_file:
         - ./config
    resourcemanager:
       image: apache/hadoop:3
       hostname: resourcemanager
-      entrypoint: [
-        "sudo", "adduser", "-D", "${YARN_RESOURCEMANAGER_USER}",
-        "&&", "su", "${YARN_RESOURCEMANAGER_USER}",
-        "&&", "yarn", "resourcemanager"
-      ]
+      entrypoint: ["sh", "-c"]
+      command:
+        - "adduser -D ${YARN_RESOURCEMANAGER_USER} && su - ${YARN_RESOURCEMANAGER_USER} -c 'yarn resourcemanager'"
       ports:
         - 8088:8088
       env_file:
@@ -40,10 +33,8 @@ services:
         - ./test.sh:/opt/test.sh
    nodemanager:
       image: apache/hadoop:3
-      entrypoint: [
-        "sudo", "adduser", "-D", "${YARN_NODEMANAGER_USER}",
-        "&&", "su", "${YARN_NODEMANAGER_USER}",
-        "&&", "yarn", "nodemanager"
-      ]
+      entrypoint: ["sh", "-c"]
+      command:
+        - "adduser -D ${YARN_NODEMANAGER_USER} && su - ${YARN_NODEMANAGER_USER} -c 'yarn nodemanager'"
       env_file:
         - ./config
