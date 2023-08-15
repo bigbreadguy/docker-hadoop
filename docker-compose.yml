@@ -17,7 +17,6 @@ services:
       - ./config      
   resourcemanager:
     image: apache/hadoop:3
-    user: yarn
     hostname: resourcemanager
     entrypoint: ["yarn", "resourcemanager"]
     ports:
@@ -28,7 +27,6 @@ services:
       - ./test.sh:/opt/test.sh
   nodemanager:
     image: apache/hadoop:3
-    user: yarn
     entrypoint: ["yarn", "nodemanager"]
     env_file:
       - ./config
