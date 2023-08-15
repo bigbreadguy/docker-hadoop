@@ -4,7 +4,7 @@ services:
     image: apache/hadoop:3
     user: hdfs
     hostname: namenode
-    entrypoint: ["sh", "-c", "adduser --disabled-password --gecos '' hdfs; hdfs namenode"]
+    entrypoint: ["sh", "-c", "adduser --disabled-password --gecos '' hdfs && hdfs namenode"]
     ports:
       - 9870:9870
     env_file:
@@ -14,14 +14,14 @@ services:
   datanode:
     image: apache/hadoop:3
     user: hdfs
-    entrypoint: ["sh", "-c", "adduser --disabled-password --gecos '' hdfs; hdfs datanode"]
+    entrypoint: ["sh", "-c", "adduser --disabled-password --gecos '' hdfs && hdfs datanode"]
     env_file:
       - ./config      
   resourcemanager:
     image: apache/hadoop:3
     user: yarn
     hostname: resourcemanager
-    entrypoint: ["sh", "-c", "adduser --disabled-password --gecos '' yarn; yarn resourcemanager"]
+    entrypoint: ["sh", "-c", "adduser --disabled-password --gecos '' yarn && yarn resourcemanager"]
     ports:
       - 8088:8088
     env_file:
@@ -31,6 +31,6 @@ services:
   nodemanager:
     image: apache/hadoop:3
     user: yarn
-    entrypoint: ["sh", "-c", "adduser --disabled-password --gecos '' yarn; yarn nodemanager"]
+    entrypoint: ["sh", "-c", "adduser --disabled-password --gecos '' yarn && yarn nodemanager"]
     env_file:
       - ./config
