@@ -20,7 +20,7 @@ services:
     hostname: resourcemanager
     entrypoint: ["yarn", "resourcemanager"]
     ports:
-      - 8088:8088
+      - 8031:8031
     env_file:
       - ./config
     volumes:
