@@ -3,7 +3,10 @@ services:
    namenode:
       image: apache/hadoop:3
       hostname: namenode
-      command: ["hdfs", "namenode"]
+      entrypoint: ["hdfs", "namenode"]
+      command:
+        - chown -R ${HDFS_NAMENODE_USER}:${HDFS_NAMENODE_USER} ${ENSURE_NAMENODE_DIR}
+        - ${HADOOP_HOME}/sbin/start-dfs.sh
       ports:
         - 9870:9870
       env_file:
@@ -14,7 +17,7 @@ services:
         HDFS_SECONDARYNAMENODE_USER: ${HDFS_SECONDARYNAMENODE_USER}
    datanode:
       image: apache/hadoop:3
-      command: ["hdfs", "datanode"]
+      entrypoint: ["hdfs", "datanode"]
       env_file:
         - ./config
       environment:
@@ -22,7 +25,7 @@ services:
    resourcemanager:
       image: apache/hadoop:3
       hostname: resourcemanager
-      command: ["yarn", "resourcemanager"]
+      entrypoint: ["yarn", "resourcemanager"]
       ports:
         - 8088:8088
       env_file:
@@ -33,7 +36,7 @@ services:
         YARN_RESOURCEMANAGER_USER: ${YARN_RESOURCEMANAGER_USER}
    nodemanager:
       image: apache/hadoop:3
-      command: ["yarn", "nodemanager"]
+      entrypoint: ["yarn", "nodemanager"]
       env_file:
         - ./config
       environment:
