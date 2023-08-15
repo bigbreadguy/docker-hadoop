@@ -9,24 +9,32 @@ services:
       env_file:
         - ./config
       environment:
-          ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+        ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+        HDFS_NAMENODE_USER: ${HDFS_NAMENODE_USER}
+        HDFS_SECONDARYNAMENODE_USER: ${HDFS_SECONDARYNAMENODE_USER}
    datanode:
       image: apache/hadoop:3
       command: ["hdfs", "datanode"]
       env_file:
-        - ./config      
+        - ./config
+      environment:
+        HDFS_DATANODE_USER: ${HDFS_DATANODE_USER}
    resourcemanager:
       image: apache/hadoop:3
       hostname: resourcemanager
       command: ["yarn", "resourcemanager"]
       ports:
-         - 8088:8088
+        - 8088:8088
       env_file:
         - ./config
       volumes:
         - ./test.sh:/opt/test.sh
+      environment:
+        YARN_RESOURCEMANAGER_USER: ${YARN_RESOURCEMANAGER_USER}
    nodemanager:
       image: apache/hadoop:3
       command: ["yarn", "nodemanager"]
       env_file:
         - ./config
+      environment:
+        YARN_NODEMANAGER_USER: ${YARN_NODEMANAGER_USER}
