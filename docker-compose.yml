@@ -7,7 +7,7 @@ services:
       command: 
         - "sudo adduser -D ${HDFS_DATANODE_USER} &&
           chown -R ${HDFS_NAMENODE_USER}:${HDFS_NAMENODE_USER} ${ENSURE_NAMENODE_DIR} &&
-          su - ${HDFS_DATANODE_USER} -c 'hdfs datanode' &&
+          sudo su - ${HDFS_DATANODE_USER} -c 'hdfs datanode' &&
           ${HADOOP_HOME}/sbin/start-dfs.sh"
       ports:
         - 9870:9870
@@ -16,7 +16,7 @@ services:
    datanode:
       image: apache/hadoop:3
       entrypoint: ["sh", "-c"]
-      command: "sudo adduser -D ${HDFS_DATANODE_USER} && su - ${HDFS_DATANODE_USER} -c 'hdfs datanode'"
+      command: "sudo adduser -D ${HDFS_DATANODE_USER} && sudo su - ${HDFS_DATANODE_USER} -c 'hdfs datanode'"
       env_file:
         - ./config
    resourcemanager:
@@ -24,7 +24,7 @@ services:
       hostname: resourcemanager
       entrypoint: ["sh", "-c"]
       command:
-        - "sudo adduser -D ${YARN_RESOURCEMANAGER_USER} && su - ${YARN_RESOURCEMANAGER_USER} -c 'yarn resourcemanager'"
+        - "sudo adduser -D ${YARN_RESOURCEMANAGER_USER} && sudo su - ${YARN_RESOURCEMANAGER_USER} -c 'yarn resourcemanager'"
       ports:
         - 8088:8088
       env_file:
@@ -35,6 +35,6 @@ services:
       image: apache/hadoop:3
       entrypoint: ["sh", "-c"]
       command:
-        - "sudo adduser -D ${YARN_NODEMANAGER_USER} && su - ${YARN_NODEMANAGER_USER} -c 'yarn nodemanager'"
+        - "sudo adduser -D ${YARN_NODEMANAGER_USER} && sudo su - ${YARN_NODEMANAGER_USER} -c 'yarn nodemanager'"
       env_file:
         - ./config
