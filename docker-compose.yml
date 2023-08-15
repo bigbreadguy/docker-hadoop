@@ -11,17 +11,11 @@ services:
         - 9870:9870
       env_file:
         - ./config
-      environment:
-        ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
-        HDFS_NAMENODE_USER: ${HDFS_NAMENODE_USER}
-        HDFS_SECONDARYNAMENODE_USER: ${HDFS_SECONDARYNAMENODE_USER}
    datanode:
       image: apache/hadoop:3
       entrypoint: ["hdfs", "datanode"]
       env_file:
         - ./config
-      environment:
-        HDFS_DATANODE_USER: ${HDFS_DATANODE_USER}
    resourcemanager:
       image: apache/hadoop:3
       hostname: resourcemanager
@@ -32,12 +26,8 @@ services:
         - ./config
       volumes:
         - ./test.sh:/opt/test.sh
-      environment:
-        YARN_RESOURCEMANAGER_USER: ${YARN_RESOURCEMANAGER_USER}
    nodemanager:
       image: apache/hadoop:3
       entrypoint: ["yarn", "nodemanager"]
       env_file:
         - ./config
-      environment:
-        YARN_NODEMANAGER_USER: ${YARN_NODEMANAGER_USER}
