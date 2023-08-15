@@ -1,40 +1,36 @@
 version: "2"
 services:
-   namenode:
-      image: apache/hadoop:3
-      hostname: namenode
-      entrypoint: ["sh", "-c"]
-      command: 
-        - "sudo adduser -D ${HDFS_DATANODE_USER} &&
-          chown -R ${HDFS_NAMENODE_USER}:${HDFS_NAMENODE_USER} ${ENSURE_NAMENODE_DIR} &&
-          sudo su - ${HDFS_DATANODE_USER} -c 'hdfs datanode' &&
-          ${HADOOP_HOME}/sbin/start-dfs.sh"
-      ports:
-        - 9870:9870
-      env_file:
-        - ./config
-   datanode:
-      image: apache/hadoop:3
-      entrypoint: ["sh", "-c"]
-      command: "sudo adduser -D ${HDFS_DATANODE_USER} && sudo su - ${HDFS_DATANODE_USER} -c 'hdfs datanode'"
-      env_file:
-        - ./config
-   resourcemanager:
-      image: apache/hadoop:3
-      hostname: resourcemanager
-      entrypoint: ["sh", "-c"]
-      command:
-        - "sudo adduser -D ${YARN_RESOURCEMANAGER_USER} && sudo su - ${YARN_RESOURCEMANAGER_USER} -c 'yarn resourcemanager'"
-      ports:
-        - 8088:8088
-      env_file:
-        - ./config
-      volumes:
-        - ./test.sh:/opt/test.sh
-   nodemanager:
-      image: apache/hadoop:3
-      entrypoint: ["sh", "-c"]
-      command:
-        - "sudo adduser -D ${YARN_NODEMANAGER_USER} && sudo su - ${YARN_NODEMANAGER_USER} -c 'yarn nodemanager'"
-      env_file:
-        - ./config
+  namenode:
+    image: apache/hadoop:3
+    user: hdfs
+    hostname: namenode
+    command: ["hdfs", "namenode"]
+    ports:
+      - 9870:9870
+    env_file:
+      - ./config
+    environment:
+      ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
+  datanode:
+    image: apache/hadoop:3
+    user: hdfs
+    command: ["hdfs", "datanode"]
+    env_file:
+      - ./config      
+  resourcemanager:
+    image: apache/hadoop:3
+    user: yarn
+    hostname: resourcemanager
+    command: ["yarn", "resourcemanager"]
+    ports:
+      - 8088:8088
+    env_file:
+      - ./config
+    volumes:
+      - ./test.sh:/opt/test.sh
+  nodemanager:
+    image: apache/hadoop:3
+    user: yarn
+    command: ["yarn", "nodemanager"]
+    env_file:
+      - ./config
