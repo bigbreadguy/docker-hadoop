@@ -3,7 +3,10 @@ services:
    namenode:
       image: apache/hadoop:3
       hostname: namenode
-      entrypoint: ["hdfs", "namenode"]
+      entrypoint: [
+        "su", "${HDFS_NAMENODE_USER}",
+        "&&", "hdfs", "namenode"
+      ]
       command:
         - chown -R ${HDFS_NAMENODE_USER}:${HDFS_NAMENODE_USER} ${ENSURE_NAMENODE_DIR}
         - ${HADOOP_HOME}/sbin/start-dfs.sh
@@ -13,13 +16,19 @@ services:
         - ./config
    datanode:
       image: apache/hadoop:3
-      entrypoint: ["hdfs", "datanode"]
+      entrypoint: [
+        "su", "${HDFS_DATANODE_USER}",
+        "&&", "hdfs", "datanode"
+      ]
       env_file:
         - ./config
    resourcemanager:
       image: apache/hadoop:3
       hostname: resourcemanager
-      entrypoint: ["yarn", "resourcemanager"]
+      entrypoint: [
+        "su", "${YARN_RESOURCEMANAGER_USER}",
+        "&&", "yarn", "resourcemanager"
+      ]
       ports:
         - 8088:8088
       env_file:
@@ -28,6 +37,9 @@ services:
         - ./test.sh:/opt/test.sh
    nodemanager:
       image: apache/hadoop:3
-      entrypoint: ["yarn", "nodemanager"]
+      entrypoint: [
+        "su", "${YARN_NODEMANAGER_USER}",
+        "&&", "yarn", "nodemanager"
+      ]
       env_file:
         - ./config
