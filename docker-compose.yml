@@ -52,5 +52,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     entrypoint: ["yarn", "nodemanager"]
+    ports:
+      - 8042:8042
     env_file:
       - ./config
