@@ -11,6 +11,7 @@ YARN-SITE.XML_yarn.nodemanager.pmem-check-enabled=false
 YARN-SITE.XML_yarn.nodemanager.delete.debug-delay-sec=600
 YARN-SITE.XML_yarn.nodemanager.vmem-check-enabled=false
 YARN-SITE.XML_yarn.nodemanager.aux-services=mapreduce_shuffle
+YARN-SITE.XML_yarn.resourcemanager.bind-host=0.0.0.0
 YARN-SITE.XML_yarn.resourcemanager.scheduler.address=resourcemanager:8030
 YARN-SITE.XML_yarn.resourcemanager.resource-tracker.address=resourcemanager:8031
 YARN-SITE.XML_yarn.resourcemanager.address=resourcemanager:8032
