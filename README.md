@@ -1,5 +1,5 @@
 # Docker Hadoop
-This readme was originally written by [The Apache Software Foundation](https://hub.docker.com/u/apache) on [their Docker Hub](https://hub.docker.com/r/apache/hadoop). I am only making a copy of the orginal article and revising some instructions so that any of visitors not be distressed.
+This repo, including readme was originally written by [The Apache Software Foundation](https://hub.docker.com/u/apache) on their [Docker Hub](https://hub.docker.com/r/apache/hadoop) and [Github](https://github.com/apache/hadoop/tree/docker-hadoop-3). I am only making a copy of the orginal article and revising some instructions so that any of visitors not be distressed.
 
 ## Apache Hadoop
 The Apache Hadoop software library is a framework that allows for the distributed processing of large data sets across clusters of computers using simple programming models. It is designed to scale up from single servers to thousands of machines, each offering local computation and storage. Rather than rely on hardware to deliver high-availability, the library itself is designed to detect and handle failures at the application layer, so delivering a highly-available service on top of a cluster of computers, each of which may be prone to failures.
