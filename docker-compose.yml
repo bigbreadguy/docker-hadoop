@@ -1,7 +1,10 @@
 version: "2"
 services:
   namenode:
-    image: apache/hadoop:3
+    # image: apache/hadoop:3
+    build:
+      context: .
+      dockerfile: ./Dockerfile
     hostname: namenode
     entrypoint: ["hdfs", "namenode"]
     ports:
@@ -11,21 +14,30 @@ services:
     environment:
       ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
   datanode1:
-    image: apache/hadoop:3
+    # image: apache/hadoop:3
+    build:
+      context: .
+      dockerfile: ./Dockerfile
     entrypoint: ["hdfs", "datanode"]
     ports:
       - 50075:50075
     env_file:
       - ./config
   datanode2:
-    image: apache/hadoop:3
+    # image: apache/hadoop:3
+    build:
+      context: .
+      dockerfile: ./Dockerfile
     entrypoint: ["hdfs", "datanode"]
     ports:
       - 50075:50075
     env_file:
       - ./config      
   resourcemanager:
-    image: apache/hadoop:3
+    # image: apache/hadoop:3
+    build:
+      context: .
+      dockerfile: ./Dockerfile
     hostname: resourcemanager
     entrypoint: ["yarn", "resourcemanager"]
     ports:
@@ -35,7 +47,10 @@ services:
     volumes:
       - ./test.sh:/opt/test.sh
   nodemanager:
-    image: apache/hadoop:3
+    # image: apache/hadoop:3
+    build:
+      context: .
+      dockerfile: ./Dockerfile
     entrypoint: ["yarn", "nodemanager"]
     env_file:
       - ./config
