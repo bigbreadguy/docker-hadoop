@@ -10,9 +10,18 @@ services:
       - ./config
     environment:
       ENSURE_NAMENODE_DIR: "/tmp/hadoop-root/dfs/name"
-  datanode:
+  datanode1:
     image: apache/hadoop:3
     entrypoint: ["hdfs", "datanode"]
+    ports:
+      - 50075:50075
+    env_file:
+      - ./config
+  datanode2:
+    image: apache/hadoop:3
+    entrypoint: ["hdfs", "datanode"]
+    ports:
+      - 50075:50075
     env_file:
       - ./config      
   resourcemanager:
