@@ -5,7 +5,25 @@ This repo, including readme was originally written by [The Apache Software Found
 The Apache Hadoop software library is a framework that allows for the distributed processing of large data sets across clusters of computers using simple programming models. It is designed to scale up from single servers to thousands of machines, each offering local computation and storage. Rather than rely on hardware to deliver high-availability, the library itself is designed to detect and handle failures at the application layer, so delivering a highly-available service on top of a cluster of computers, each of which may be prone to failures.
 
 ## Quickstart
-A Hadoop cluster can be created by pulling in the relevant docker image and specifying the required configurations.
+### Build the Images
+```
+docker-compose build
+```
+### Run the Containers
+```
+docker-compose up -d
+```
+### Access to the Namenode
+User **hadoop** has been granted to execute hadoop and hdfs commands.
+```
+docker exec --user hadoop -it docker-hadoop_namenode_1 /bin/bash
+```
+or just run the command without --user flag, **hadoop is default.**
+```
+docker exec -it docker-hadoop_namenode_1 /bin/bash
+```
+
+## In-Depth Guide
 
 ### Example building the latest hadoop-3 image
 **Create a basic docker-compose.yaml file like:**
@@ -45,7 +63,7 @@ services:
 ```
 Change the ```image: apache/hadoop:3``` incase you want to build any other image like ```image: apache/hadoop:3.3.5``` for building Apache Hadoop 3.3.5 image
 
-**Create a config file like:**
+**Create a Config File Like:**
 ```
 CORE-SITE.XML_fs.default.name=hdfs://namenode
 CORE-SITE.XML_fs.defaultFS=hdfs://namenode
@@ -76,7 +94,7 @@ CAPACITY-SCHEDULER.XML_yarn.scheduler.capacity.queue-mappings-override.enable=fa
 ```
 ** You can add/replace any new config in the similar format in this file.
 
-### Check the current directory (optional)
+### Check the Current Directory (optional)
 Do a ls -l on the current directory it should have the two files we created above
 ```
 docker-3 % ls -l
@@ -84,7 +102,7 @@ docker-3 % ls -l
 -rw-r--r--  1 hadoop  apache  1533 Jun 23 16:07 docker-compose.yaml
 ```
 
-### Run the docker containers
+### Run the Docker Containers
 Run the docker containers using docker-compose
 ```
 docker-compose up -d
@@ -121,6 +139,33 @@ The cluster can be shut down via:
 ```
 docker-compose down
 ```
+
+## How Set-up Hadoop-Book Examples
+### Access to the namenode as root user
+```
+docker exec --user root -it docker-hadoop_namenode_1 /bin/bash
+```
+### Install git and clone the example repo.
+```
+yum install git
+```
+```
+git clone https://github.com/tomwhite/hadoop-book.git
+```
+### Install maven and build
+```
+yum install maven
+```
+```
+cd hadoop-book \
+mvn package -DskipTests
+```
+### Copy all the example data from local file system to hdfs
+```
+hdfs dfs -put input hdfs://namenode/user/hadoop/input
+```
+
+## Appendix
 
 ### Note:
 The above example is for Hadoop-3.x line, In case you want to build the Hadoop-2.x, Similar steps but different config & docker-compose.yaml file. Logic can be extracted from: https://github.com/apache/hadoop/tree/docker-hadoop-2
